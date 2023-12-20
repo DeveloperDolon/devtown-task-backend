@@ -24,7 +24,19 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
+    const phoneCollection = client.db("DevTowTask").collection("mobileCollections");
 
+
+    app.get("/all-phones", async (req, res) => {
+        try {
+
+            const result = await phoneCollection.find().toArray();
+            res.send(result);
+
+        } catch (err) {
+            console.log(err);
+        }
+    })
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
